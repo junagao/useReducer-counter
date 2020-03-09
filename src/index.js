@@ -3,20 +3,28 @@ import { render } from 'react-dom'
 
 import './styles.scss'
 
-function reducer(state, value) {
-  return state + value
+function reducer(state, action) {
+  switch (action) {
+    case 'increment':
+      return state + 1
+    case 'decrement':
+      return state - 1
+    case 'reset':
+      return 0
+    default:
+      throw new Error()
+  }
 }
 
-const initialState = 0
-
 function Counter() {
-  const [count, dispatch] = React.useReducer(reducer, initialState)
+  const [count, dispatch] = React.useReducer(reducer, 0)
 
   return (
     <div className="App">
       <h1>{count}</h1>
-      <button onClick={() => dispatch(1)}>+</button>
-      <button onClick={() => dispatch(-1)}>-</button>
+      <button onClick={() => dispatch('increment')}>+</button>
+      <button onClick={() => dispatch('decrement')}>-</button>
+      <button onClick={() => dispatch('reset')}>reset</button>
     </div>
   )
 }
